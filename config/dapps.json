@@ -18,18 +18,6 @@
           "firstBlock": 5216718
         }
       ]
-    },
-    {
-      "id": "erc20",
-      "desc": "ERC20 Token",
-      "deployments": [
-        {
-          "desc": "RHOC - RChain",
-          "chain": "mainnet",
-          "key": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
-          "firstBlock": 3383352
-        }
-      ]
     }
   ]
 }
