@@ -16,6 +16,12 @@
           "chain": "kovan",
           "key": "0x8cf1Cab422A0b6b554077A361f8419cDf122a9F9",
           "firstBlock": 5216718
+        },
+        {
+          "desc": "OasisDex",
+          "chain": "local",
+          "key": "0x4e5F802405B29fFae4AE2a7dA1d9cEEB53904D55",
+          "firstBlock": 0
         }
       ]
     }
