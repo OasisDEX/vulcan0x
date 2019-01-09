@@ -7,17 +7,18 @@ import { fire } from "./contract";
 import { eachDeployment } from "./util";
 import { dapps } from "../config/env";
 
-const sync = (opt, id) => {
+const sync = async (opt, id) => {
   const abi = require(`../dapp/${id}/abi/${opt.key}.json`);
   const contract = new web3.eth.Contract(abi, opt.key);
   const transformer = require(`../dapp/${id}`);
-  web3.eth
-    .getBlockNumber()
-    .then(latest => {
-      console.log("Latest block:", latest);
-      transformer.events.forEach(event => batchSync(contract, event, opt.firstBlock, latest));
-    })
-    .catch(e => console.log(e));
+
+  const fromBlock = opt.firstBlock;
+  const lastBlock = opt.lastBlock || (await web3.eth.getBlockNumber());
+  console.log(`Syncing: ${id} ${opt.desc}`, { fromBlock, lastBlock });
+
+  await Promise.all(
+    transformer.events.map(event => batchSync(contract, event, fromBlock, lastBlock)),
+  );
 };
 
 export const makeBatches = (from, to, step, arr = []) => {
