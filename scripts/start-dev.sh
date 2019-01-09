@@ -2,12 +2,12 @@
 set -ex
 cd "$(dirname "$0")"
 
+export ENV_FILE=.env.local
+
 cd ../docker_env
 
-export ENV_FILE=.env.dev
-docker-compose -f ./docker-compose-dev.yml up -d
+docker-compose -f ./docker-compose-dev.yml down || true
 
-../docker_env/wait-for localhost:5432 -t 30
+(../docker_env/wait-for localhost:5432 -t 30 && sleep 5 && ENV=docker_env/.env.dev yarn migrate)&
 
-ENV=docker_env/.env.dev yarn migrate
-ENV=docker_env/.env.dev yarn sync
+docker-compose -f ./docker-compose-dev.yml up

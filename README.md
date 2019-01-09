@@ -63,8 +63,16 @@ particular contract.
 
 `npm run sync -- --dapp=oasis`
 
+### Running locally
+
+```sh
+./scripts/start.sh # start localnode + postgres + migrate + sync + subscribe + graphql
+```
+
 ### Development
 
 ```sh
-./scripts/start-dev.sh
+./scripts/start-dev.sh # starts postgres and does schema migration
 ```
+Then you should start `localnode` and you can run any script directly with yarn run subscribe | sync | graphql.
+
