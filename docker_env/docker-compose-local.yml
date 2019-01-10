@@ -2,6 +2,7 @@ version: "3.2"
 services:
   localnode:
     image: "oasisdexorg/localnode:e0e1c22627029b4bd38a2c189c77623a348801b4"
+    # uncomment and point to you local-node instance to be able to modify localnoe on the fly
     # volumes:
       # - ../../oasis-local-node/script/src:/home/tester/app/script/src
     command: "master"
