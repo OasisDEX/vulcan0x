@@ -2,8 +2,10 @@
  * Sync PAST events
  */
 
+import { flatten } from "lodash";
 import web3 from "./web3";
 import { fire } from "./contract";
+import { close as closeDbConnection } from "./db";
 import { eachDeployment } from "./util";
 import { dapps } from "../config/env";
 
@@ -56,7 +58,7 @@ const syncEvents = (contract, event, from, to) => {
 
   return contract
     .getPastEvents(event.sig, options)
-    .then(logs => logs.forEach(log => fire(event, log, contract)))
+    .then(logs => Promise.all(logs.map(log => fire(event, log, contract))))
     .catch(e => {
       console.log("Error: ", e);
     });
@@ -64,8 +66,20 @@ const syncEvents = (contract, event, from, to) => {
 
 const argv = require("yargs").argv;
 
+let tasks;
 if (argv.dapp) {
-  eachDeployment(argv.dapp, sync);
+  tasks = eachDeployment(argv.dapp, sync);
 } else {
-  dapps.forEach(id => eachDeployment(id, sync));
+  tasks = flatten(dapps.map(id => eachDeployment(id, sync)));
 }
+Promise.all(tasks)
+  .then(() => {
+    console.log("All tasks done!");
+    closeDbConnection();
+    // process won't quit automatically :/
+    process.exit(0);
+  })
+  .catch(e => {
+    console.log("Error: ", e);
+    process.exit(1);
+  })

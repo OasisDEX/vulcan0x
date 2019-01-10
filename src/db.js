@@ -10,4 +10,9 @@ function sql(file) {
   return new pgp.QueryFile(fullPath, { minify: true });
 }
 
+export function close() {
+  console.log("Closing DB connection.");
+  db.$pool.end();
+}
+
 export { db, config, sql }
