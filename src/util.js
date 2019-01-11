@@ -25,3 +25,10 @@ export const eachDeployment = (id, f) => {
 
   return jp.query(dapp, `$..[?(@.chain=="${chain.id}")]`).map(deployment => f(deployment, id));
 };
+
+// Prevent node process from exiting while waiting for callbacks etc. Useful for sync.js script which waits for web3 callbacks which can not be fired for a long time
+// inspired by https://stackoverflow.com/questions/6442676/how-to-prevent-node-js-from-exiting-while-waiting-for-a-callback
+// is there a better way to achieve this?
+export function preventExit() {
+  setTimeout(preventExit, 10000);
+}
