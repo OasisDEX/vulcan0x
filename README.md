@@ -63,6 +63,12 @@ particular contract.
 
 `npm run sync -- --dapp=oasis`
 
+### Docker
+
+```sh
+docker pull oasisdexorg/vulcan0x
+```
+
 ### Running locally
 
 ```sh
