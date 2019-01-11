@@ -8,7 +8,7 @@ if (fs.existsSync(env)) {
   require('dotenv').config({path: join(process.cwd(), env)})
 } else {
   console.log(env, 'file not found')
-  process.exit()
+  process.exit(1)
 }
 
 const pgSSL = process.env.POSTGRES_SSL == 'true' || false

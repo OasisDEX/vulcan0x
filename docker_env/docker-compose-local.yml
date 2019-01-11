@@ -1,0 +1,84 @@
+version: "3.2"
+services:
+  localnode:
+    image: "oasisdexorg/localnode:e0e1c22627029b4bd38a2c189c77623a348801b4"
+    # uncomment and point to you local-node instance to be able to modify localnoe on the fly
+    # volumes:
+      # - ../../oasis-local-node/script/src:/home/tester/app/script/src
+    command: "master"
+    ports:
+      - "8545:8545"
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    env_file:
+      - $ENV_FILE
+    ports:
+      - "5432:5432"
+
+  migrate:
+    image: makerdao/vulcan0x
+    container_name: migrate
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../src:/opt/vulcan0x/src
+      - ./../dapp:/opt/vulcan0x/dapp
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30 && sleep 5 && npm run migrate"
+    depends_on:
+      - postgres
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 15s
+        max_attempts: 3
+        window: 25s
+
+  sync:
+    image: makerdao/vulcan0x
+    container_name: sync
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../src:/opt/vulcan0x/src
+      - ./../dapp:/opt/vulcan0x/dapp
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30 && sleep 15 && npm run sync"
+    depends_on:
+      - postgres
+      - localnode
+
+  subscribe:
+    image: makerdao/vulcan0x
+    container_name: subscribe
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../src:/opt/vulcan0x/src
+      - ./../dapp:/opt/vulcan0x/dapp
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30  && sleep 15 && npm run subscribe"
+    depends_on:
+      - postgres
+      - localnode
+
+  graphql:
+    image: makerdao/vulcan0x
+    container_name: graphql
+    ports:
+      - 4000:4000
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../graphql:/opt/vulcan0x/graphql
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30 && sleep 15 && npm run graphql"
+    depends_on:
+      - postgres
+      - localnode

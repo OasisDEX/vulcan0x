@@ -62,3 +62,23 @@ all contracts in the `dapp` folder or with the `--dapp` flag to run against a
 particular contract.
 
 `npm run sync -- --dapp=oasis`
+
+### Docker
+
+```sh
+docker pull oasisdexorg/vulcan0x
+```
+
+### Running locally
+
+```sh
+./scripts/start.sh # start localnode + postgres + migrate + sync + subscribe + graphql
+```
+
+### Development
+
+```sh
+./scripts/start-dev.sh # starts postgres and does schema migration
+```
+Then you should start `localnode` and you can run any script directly with yarn run subscribe | sync | graphql.
+
