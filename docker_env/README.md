@@ -24,7 +24,7 @@ machine in case specified):
 - subscribe and graphql processes
 
 For starting environment:
-- `git clone https://github.com/makerdao/vulcan0x.git`
+- `git clone https://github.com/oasisdexorg/vulcan0x.git`
 - add `.env` file in `vulcan0x/docker_env` directory containing
 PostgreSQL configuration details,  e.g `docker_env/.env`:
 ```
