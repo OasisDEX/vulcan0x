@@ -18,7 +18,7 @@ services:
       - "5432:5432"
 
   migrate:
-    image: makerdao/vulcan0x
+    image: oasisdexorg/vulcan0x
     container_name: migrate
     volumes:
       - $ENV_FILE:/opt/vulcan0x/.env
@@ -38,7 +38,7 @@ services:
         window: 25s
 
   sync:
-    image: makerdao/vulcan0x
+    image: oasisdexorg/vulcan0x
     container_name: sync
     volumes:
       - $ENV_FILE:/opt/vulcan0x/.env
@@ -53,7 +53,7 @@ services:
       - localnode
 
   subscribe:
-    image: makerdao/vulcan0x
+    image: oasisdexorg/vulcan0x
     container_name: subscribe
     volumes:
       - $ENV_FILE:/opt/vulcan0x/.env
@@ -68,7 +68,7 @@ services:
       - localnode
 
   graphql:
-    image: makerdao/vulcan0x
+    image: oasisdexorg/vulcan0x
     container_name: graphql
     ports:
       - 4000:4000
