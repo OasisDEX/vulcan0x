@@ -27,3 +27,10 @@ jobs:
       - run:
           name: Run tests
           command: source /opt/circleci/.nvm/nvm.sh && ./test.sh
+
+      - run: |
+          # it's easier to do this here instead of separate job to avoid problems with previously built docker image not accessible
+          if [ "$CIRCLE_BRANCH" == "master" ]; then
+            docker build -t oasisdexorg/vulcan0x .
+            ./scripts/deploy.sh
+          fi
