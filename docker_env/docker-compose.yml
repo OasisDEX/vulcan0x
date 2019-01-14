@@ -1,0 +1,55 @@
+version: "3.2"
+services:
+
+  migrate:
+    image: oasisdexorg/vulcan0x
+    container_name: migrate
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../src:/opt/vulcan0x/src
+      - ./../dapp:/opt/vulcan0x/dapp
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env  npm run migrate"
+    restart: on-failure:3 
+
+  sync:
+    image: oasisdexorg/vulcan0x
+    container_name: sync
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../src:/opt/vulcan0x/src
+      - ./../dapp:/opt/vulcan0x/dapp
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env npm run sync"
+    restart: on-failure:3
+
+  subscribe:
+    image: oasisdexorg/vulcan0x
+    container_name: subscribe
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../src:/opt/vulcan0x/src
+      - ./../dapp:/opt/vulcan0x/dapp
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env npm run subscribe"
+    restart: on-failure:3
+
+  graphql:
+    image: oasisdexorg/vulcan0x
+    container_name: graphql
+    ports:
+      - 4000:4000
+    volumes:
+      - $ENV_FILE:/opt/vulcan0x/.env
+      - ./wait-for:/opt/vulcan0x/wait-for
+      - ./../graphql:/opt/vulcan0x/graphql
+      - ./../config:/opt/vulcan0x/config
+    command: >
+      bash -c "ENV=/opt/vulcan0x/.env npm run graphql"
+    restart: on-failure:3
