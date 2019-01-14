@@ -17,6 +17,7 @@ export ENV_FILE=.env.${network}
 if [ "$network" != "mainnet" ]; then 
   echo "Making sure that initial state is pristine:"
   docker-compose -f ./docker-compose-local.yml down -v || true
+  rm -rf postgres-data
 else
   echo "Mainnet detected. Skipping volume purge."
   docker-compose -f ./docker-compose-local.yml down || true
