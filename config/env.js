@@ -14,7 +14,7 @@ if (fs.existsSync(env)) {
 const pgSSL = process.env.POSTGRES_SSL == 'true' || false
 
 const config = {
-  dapps: (process.env.DAPPS) ? process.env.DAPPS.split(':') : ['oasis'],
+  dapps: (process.env.DAPPS) ? process.env.DAPPS.split(':') : ['oasis', 'erc20'],
   chain: {
     provider: process.env.ETH_PROVIDER || 'wss://mainnet.infura.io/_ws',
     id: process.env.ETH_CHAIN || 'kovan'

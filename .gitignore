@@ -6,3 +6,4 @@ package-lock.json
 npm-debug.log
 pgdata/
 .pytest_cache/
+docker_env/postgres-data
