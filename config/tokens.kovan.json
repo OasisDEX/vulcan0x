@@ -1,4 +1,71 @@
 {
   "_comment": "Versioned table data synced to erc20.token",
-  "erc20": []
+  "erc20": [
+    {
+      "key": "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
+      "symbol": "WETH",
+      "decimals": 18,
+      "desc": "Wrapped ETH"
+    },
+    {
+      "key": "0xC4375B7De8af5a38a93548eb8453a498222C4fF2",
+      "symbol": "DAI",
+      "decimals": 18,
+      "desc": "Dai Stablecoin"
+    },
+    {
+      "key": "0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD",
+      "symbol": "MKR",
+      "decimals": 18,
+      "desc": "Maker"
+    },
+    {
+      "key": "0xBEB9eF514a379B997e0798FDcC901Ee474B6D9A1",
+      "symbol": "MLN",
+      "decimals": 18,
+      "desc": "Melonport"
+    },
+    {
+      "key": "0xAf30D2a7E90d7DC361c8C4585e9BB7D2F6f15bc7",
+      "symbol": "ST",
+      "decimals": 18,
+      "desc": "FirstBlood"
+    },
+    {
+      "key": "0xE0B7927c4aF23765Cb51314A0E0521A9645F0E2A",
+      "symbol": "DGD",
+      "decimals": 9,
+      "desc": "DigixDAO"
+    },
+    {
+      "key": "0xE94327D07Fc17907b4DB788E5aDf2ed424adDff6",
+      "symbol": "REP",
+      "decimals": 18,
+      "desc": "Augur"
+    },
+    {
+      "key": "0x888666CA69E0f178DED6D75b5726Cee99A87D698",
+      "symbol": "ICN",
+      "decimals": 18,
+      "desc": "Iconomi"
+    },
+    {
+      "key": "0x01AfC37F4F85babc47c0E2d0EAbABC7FB49793c8",
+      "symbol": "W-GNT",
+      "decimals": 18,
+      "desc": "Golem"
+    },
+    {
+      "key": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF",
+      "symbol": "BAT",
+      "decimals": 18,
+      "desc": "Brave"
+    },
+    {
+      "key": "0x168296bb09e24A88805CB9c33356536B980D3fC5",
+      "symbol": "RHOC",
+      "decimals": 8,
+      "desc": "RChain"
+    }
+  ]
 }
