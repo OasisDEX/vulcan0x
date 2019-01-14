@@ -28,6 +28,7 @@ services:
       - ./../src:/opt/vulcan0x/src
       - ./../dapp:/opt/vulcan0x/dapp
       - ./../config:/opt/vulcan0x/config
+      - ./../pg:/opt/vulcan0x/pg
     command: >
       bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30 && sleep 5 && npm run migrate"
     depends_on:
