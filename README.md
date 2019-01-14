@@ -71,8 +71,9 @@ docker pull oasisdexorg/vulcan0x
 
 ### Running locally
 
+Where NETWORK is one of `mainnet`, `kovan` or `local`
 ```sh
-./scripts/start.sh # start localnode + postgres + migrate + sync + subscribe + graphql
+./scripts/start.sh NETWORK # start localnode + postgres + migrate + sync + subscribe + graphql
 ```
 
 ### Development
