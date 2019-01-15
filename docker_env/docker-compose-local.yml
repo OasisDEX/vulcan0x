@@ -79,9 +79,10 @@ services:
       - $ENV_FILE:/opt/vulcan0x/.env
       - ./wait-for:/opt/vulcan0x/wait-for
       - ./../graphql:/opt/vulcan0x/graphql
+      - ./../package.json:/opt/vulcan0x/package.json
       - ./../config:/opt/vulcan0x/config
     command: >
-      bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30 && sleep 15 && npm run graphql"
+      bash -c "ENV=/opt/vulcan0x/.env ./wait-for postgres:5432 -t 30 && sleep 15 && yarn && npm run graphql"
     depends_on:
       - postgres
       - localnode
