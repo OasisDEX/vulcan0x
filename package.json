@@ -10,6 +10,7 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "bignumber.js": "^7.2.1",
+    "compression": "^1.7.3",
     "dotenv": "^5.0.1",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
