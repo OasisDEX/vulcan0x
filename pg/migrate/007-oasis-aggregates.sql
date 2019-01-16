@@ -7,7 +7,7 @@ CREATE VIEW api.trades_aggregated_hour AS
  	MAX(oasis_trade.price) AS max,
 	date_trunc('hour', oasis_trade.time) as DATE
 	SUM(oasis_trade.bid_amt) as volume_bid,
- 	SUM(oasis_trade.lot_amt) as volume_amt,
+ 	SUM(oasis_trade.lot_amt) as volume_lot,
    FROM api.oasis_trade
   GROUP BY DATE, oasis_trade.market;
 
@@ -20,7 +20,7 @@ CREATE VIEW api.trades_aggregated_day AS
  	MAX(oasis_trade.price) AS max,
 	date_trunc('day', oasis_trade.time) as DATE
 	SUM(oasis_trade.bid_amt) as volume_bid,
- 	SUM(oasis_trade.lot_amt) as volume_amt,
+ 	SUM(oasis_trade.lot_amt) as volume_lot,
    FROM api.oasis_trade
   GROUP BY DATE, oasis_trade.market;
 
@@ -33,7 +33,7 @@ CREATE VIEW api.trades_aggregated_week AS
  	MAX(oasis_trade.price) AS max,
 	date_trunc('week', oasis_trade.time) as DATE
 	SUM(oasis_trade.bid_amt) as volume_bid,
- 	SUM(oasis_trade.lot_amt) as volume_amt,
+ 	SUM(oasis_trade.lot_amt) as volume_lot,
    FROM api.oasis_trade
   GROUP BY DATE, oasis_trade.market;
 
@@ -46,6 +46,6 @@ CREATE VIEW api.trades_aggregated_month AS
  	MAX(oasis_trade.price) AS max,
 	date_trunc('month', oasis_trade.time) as DATE
 	SUM(oasis_trade.bid_amt) as volume_bid,
- 	SUM(oasis_trade.lot_amt) as volume_amt,
+ 	SUM(oasis_trade.lot_amt) as volume_lot,
    FROM api.oasis_trade
   GROUP BY DATE, oasis_trade.market;
