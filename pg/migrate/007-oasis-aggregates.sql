@@ -9,6 +9,9 @@ CREATE TABLE api.trades_aggregated_schema (
   date timestamp NOT NULL
 );
 
+CREATE VIEW api.oasis_clean_trade AS
+  SELECT * FROM api.oasis_trade WHERE bid_amt > 0.000000000001 AND lot_amt > 0.000000000001;
+
 CREATE FUNCTION api.trades_aggregated(time_unit VARCHAR, tz_offset INTERVAL)
 RETURNS SETOF api.trades_aggregated_schema AS $$
   SELECT
@@ -28,7 +31,7 @@ RETURNS SETOF api.trades_aggregated_schema AS $$
       ELSE 0
     END) AS volume_quote,
     date_trunc(time_unit, oasis_trade.time AT TIME ZONE tz_offset) AS date
-  FROM api.oasis_trade
+  FROM api.oasis_clean_trade AS oasis_trade
   LEFT JOIN oasis.market ON oasis_trade.market = market.id
   GROUP BY date, oasis_trade.market
   ORDER BY date ASC;
