@@ -31,5 +31,5 @@ RETURNS SETOF api.trades_aggregated_schema AS $$
   FROM api.oasis_trade
   LEFT JOIN oasis.market ON oasis_trade.market = market.id
   GROUP BY date, oasis_trade.market
-  ORDER BY date DESC;
+  ORDER BY date ASC;
 $$ LANGUAGE sql STABLE STRICT;
