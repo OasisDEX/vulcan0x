@@ -84,7 +84,7 @@ SELECT
   block,
   time,
   tx,
-  idx,
+  idx
 FROM oasis.trade t
 LEFT JOIN erc20.token lot
   ON lot.key = t.lot_gem
