@@ -2,7 +2,7 @@
  * Subscribes to new events from blockchain.
  */
 
-import web3 from "./web3";
+import web3, { setProvider } from "./web3";
 import { listen } from "./contract";
 import { eachDeployment } from "./util";
 import { dapps } from "../config/env";
@@ -19,10 +19,14 @@ const subscribe = (opt, id) => {
   listen(contract, transformer.events);
 };
 
-const argv = require("yargs").argv;
+function run() {
+  const argv = require("yargs").argv;
 
-if (argv.dapp) {
-  eachDeployment(argv.dapp, subscribe);
-} else {
-  dapps.forEach(id => eachDeployment(id, subscribe));
+  if (argv.dapp) {
+    eachDeployment(argv.dapp, subscribe);
+  } else {
+    dapps.forEach(id => eachDeployment(id, subscribe));
+  }
 }
+
+setProvider(run);

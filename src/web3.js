@@ -1,18 +1,32 @@
-import { chain } from '../config/env';
+import { chain } from "../config/env";
 
-const Web3 = require('web3');
+const Web3 = require("web3");
 
-function getProvider() {
-  // ganache works a little bit differently then other nodes so we provider different provider for websockets
-  if (chain.id === "local") {
-    return new Web3.providers.WebsocketProvider(chain.provider)
-  } else {
-    return Web3.givenProvider || chain.provider;
-  }
+export function setProvider(runOnFail) {
+  const provider = new Web3.providers.WebsocketProvider(chain.provider);
+  provider.on("error", e => {
+    console.log("WS-ERROR: ", e);
+
+    console.log("Reconnecting...");
+    return setProvider(runOnFail);
+  });
+
+  provider.on("end", e => {
+    console.log("WS-END: ", e);
+
+    console.log("Reconnecting...");
+    return setProvider(runOnFail);
+  });
+
+  web3.setProvider(provider);
+  runOnFail && runOnFail();
+  return;
 }
 
-const web3 = new Web3(getProvider());
+const web3 = new Web3();
+
+setProvider();
 
 console.log("web3:", web3.version);
 
-export default web3
+export default web3;
