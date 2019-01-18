@@ -4,7 +4,7 @@
 
 import web3 from "./web3";
 import { listen } from "./contract";
-import { eachDeployment, preventExit } from "./util";
+import { eachDeployment } from "./util";
 import { dapps } from "../config/env";
 
 const subscribe = (opt, id) => {
@@ -26,5 +26,3 @@ if (argv.dapp) {
 } else {
   dapps.forEach(id => eachDeployment(id, subscribe));
 }
-
-preventExit();
