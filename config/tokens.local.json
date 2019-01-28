@@ -1,4 +1,23 @@
 {
   "_comment": "Versioned table data synced to erc20.token",
-  "erc20": []
+  "erc20": [
+    {
+      "key": "0x28085CEfA9103d3a55Fb5AfCcf07eD2038d31cD4",
+      "symbol": "WETH",
+      "decimals": 18,
+      "desc": "Wrapped ETH"
+    },
+    {
+      "key": "0xff500C51399A282f4563F2713fFCBe9e53cfb6Fa",
+      "symbol": "DAI",
+      "decimals": 18,
+      "desc": "Dai Stablecoin"
+    },
+    {
+      "key": "0xe80C262f63df9376d2ce9eDd373832EDc9FCA46E",
+      "symbol": "MKR",
+      "decimals": 18,
+      "desc": "Maker"
+    }
+  ]
 }
