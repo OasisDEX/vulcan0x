@@ -1,6 +1,6 @@
 CREATE INDEX oasis_trade_time_index ON oasis.trade(time);
 
-DROP FUNCTION api.trades_aggregated;
+DROP FUNCTION api.trades_aggregated(time_unit VARCHAR, tz_offset INTERVAL);
 CREATE FUNCTION api.trades_aggregated(time_unit VARCHAR, tz_offset INTERVAL, date_from TIMESTAMP, date_to TIMESTAMP)
 RETURNS SETOF api.trades_aggregated_schema AS $$
   SELECT
