@@ -1,18 +1,7 @@
-CREATE TABLE api.trades_aggregated_schema (
-  market VARCHAR NOT NULL,
-  open decimal(28,18) NOT NULL,
-  close decimal(28,18) NOT NULL,
-  min decimal(28,18) NOT NULL,
-  max decimal(28,18) NOT NULL,
-  volume_base decimal(28,18) NOT NULL,
-  volume_quote decimal(28,18) NOT NULL,
-  date timestamp NOT NULL
-);
+CREATE INDEX oasis_trade_time_index ON oasis.trade(time);
 
-CREATE VIEW api.oasis_clean_trade AS
-  SELECT * FROM api.oasis_trade WHERE bid_amt > 0.000000000001 AND lot_amt > 0.000000000001;
-
-CREATE FUNCTION api.trades_aggregated(time_unit VARCHAR, tz_offset INTERVAL)
+DROP FUNCTION api.trades_aggregated;
+CREATE FUNCTION api.trades_aggregated(time_unit VARCHAR, tz_offset INTERVAL, date_from TIMESTAMP, date_to TIMESTAMP)
 RETURNS SETOF api.trades_aggregated_schema AS $$
   SELECT
     oasis_trade.market,
@@ -33,6 +22,8 @@ RETURNS SETOF api.trades_aggregated_schema AS $$
     date_trunc(time_unit, oasis_trade.time AT TIME ZONE tz_offset) AS date
   FROM api.oasis_clean_trade AS oasis_trade
   LEFT JOIN oasis.market ON oasis_trade.market = market.id
+  WHERE (date_from IS NULL OR oasis_trade.time >= date_from)
+    AND (date_to IS NULL OR oasis_trade.time <= date_to)
   GROUP BY date, oasis_trade.market
   ORDER BY date ASC;
-$$ LANGUAGE sql STABLE STRICT;
+$$ LANGUAGE sql STABLE;

@@ -46,7 +46,6 @@ CREATE INDEX oasis_trade_bid_gem_index ON oasis.trade(bid_gem);
 CREATE INDEX oasis_trade_maker_index ON oasis.trade(maker);
 CREATE INDEX oasis_trade_taker_index ON oasis.trade(taker);
 CREATE INDEX oasis_trade_removed_index ON oasis.trade(removed);
-CREATE INDEX oasis_trade_time_index ON oasis.trade(time);
 
 CREATE TABLE oasis.market (
   id         character varying(10) primary key,
