@@ -6,6 +6,12 @@
       "desc": "OasisDex",
       "deployments": [
         {
+          "desc": "OasisDex-feb-2019",
+          "chain": "mainnet",
+          "key": "0x39755357759ce0d7f32dc8dc45414cca409ae24e",
+          "firstBlock": 7183773
+        },
+        {
           "desc": "OasisDex",
           "chain": "mainnet",
           "key": "0xB7ac09C2c0217B07d7c103029B4918a2C401eeCB",
@@ -19,6 +25,12 @@
           "lastBlock": 6864599
         },
 
+        {
+          "desc": "OasisDex-feb-2019",
+          "chain": "kovan",
+          "key": "0x4A6bC4e803c62081ffEbCc8d227B5a87a58f1F8F",
+          "firstBlock": 10298690
+        },
         {
           "desc": "OasisDex",
           "chain": "kovan",
