@@ -60,7 +60,7 @@ const syncEvents = (contract, event, from, to) => {
     .getPastEvents(event.sig, options)
     .then(logs => Promise.all(logs.map(log => fire(event, log, contract))))
     .catch(e => {
-      console.log("Error: ", e);
+      console.log("Error: ", { from, to }, e);
     });
 };
 
@@ -82,4 +82,4 @@ Promise.all(tasks)
   .catch(e => {
     console.log("Error: ", e);
     process.exit(1);
-  })
+  });
