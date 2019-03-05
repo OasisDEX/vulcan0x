@@ -1,0 +1,11 @@
+query allTradesLive($baseToken: String, $quoteToken: String, $timeFrom: Datetime) {
+  allOasisSimpleTrades(
+    filter: {
+      or: [{and: [{lotTkn: {equalTo: $baseToken}}, {bidTkn: {equalTo: $quoteToken}}]}, {and: [{lotTkn: {equalTo: $quoteToken}}, {bidTkn: {equalTo: $baseToken}}]}],
+      time: {greaterThan: $timeFrom},
+    },
+    orderBy: [TIME_DESC, IDX_DESC],
+  ) {
+    nodes { offerId maker bidAmt bidTkn lotAmt block time tx idx }
+  }
+}

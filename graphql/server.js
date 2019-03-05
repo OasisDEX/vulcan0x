@@ -5,9 +5,13 @@ const { postgraphile } = require("postgraphile");
 const FilterPlugin = require("postgraphile-plugin-connection-filter");
 const RateLimit = require("express-rate-limit");
 const compression = require("compression");
+const bodyParser = require("body-parser");
+const fs = require('fs');
+const _ = require('lodash');
 
 const app = express();
 app.use(compression());
+app.use(bodyParser.json());
 
 // Rendering options for the index page
 app.engine("html", require("ejs").renderFile);
@@ -31,6 +35,41 @@ const limiter = new RateLimit({
   max: 30, // 30 requests per IP
   delayAfter: 10, // slow responses after 10 requests
   delayMs: 100, // by 1 second
+});
+
+const readEntities = (dir, ext) => {
+  return _.fromPairs(fs.readdirSync(dir)
+    .map(file => file.endsWith(ext) && file.substr(0, file.length - ext.length))
+    .filter(file => file)
+    .map(file => [file, fs.readFileSync(`${dir}/${file}${ext}`, 'utf-8')]));
+}
+
+const allowedQueries = readEntities('graphql/queries', '.graphql');
+console.log(`allowed queries: ${Object.keys(allowedQueries).join(', ')}`);
+const devMode = process.env.GRAPHQL_DEV;
+console.log(`dev mode: ${devMode ? 'enabled' : 'disabled'}`);
+
+app.use(graphqlConfig.graphqlRoute, (req, resp, next) => {
+  if (req.method !== "POST") {
+    next();
+    return;
+  }
+  const devModeRequest = (req.body.variables || {}).devMode;
+
+  if (devModeRequest && devModeRequest !== devMode)
+    console.log("attempt to request dev mode");
+
+  if (!devMode || devModeRequest !== devMode) {
+    if (allowedQueries.hasOwnProperty(req.body.operationName)) {
+      req.body.query = allowedQueries[req.body.operationName];
+    } else {
+      console.log(`query not allowed: ${req.body.operationName}`);
+      req.body.query = null;
+    }
+  } else
+    console.log("dev mode requested");
+
+  next();
 });
 
 app.use(postgraphile(config.db, schemas, graphqlConfig));

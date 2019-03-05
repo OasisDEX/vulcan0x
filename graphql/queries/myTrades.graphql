@@ -1,0 +1,11 @@
+query myTrades($baseToken: String, $quoteToken: String, $owner: String) {
+  allOasisSimpleTrades(
+    filter: {
+      or: [{and: [{lotTkn: {equalTo: $baseToken}}, {bidTkn: {equalTo: $quoteToken}}]}, {and: [{lotTkn: {equalTo: $quoteToken}}, {bidTkn: {equalTo: $baseToken}}]}],
+      and: [{or: [{maker: {equalTo: $owner}}, {taker: {equalTo: $owner}}]}],
+    },
+    orderBy: [TIME_DESC, IDX_DESC],
+  ) {
+    nodes { offerId maker bidAmt bidTkn lotAmt block time tx idx }
+  }
+}

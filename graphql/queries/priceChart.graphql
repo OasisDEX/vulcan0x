@@ -1,0 +1,10 @@
+query priceChart($timeUnit: String, $tzOffset: IntervalInput, $dateFrom: Datetime, $market: String) {
+  tradesAggregated(
+    timeUnit: $timeUnit,
+    tzOffset: $tzOffset,
+    dateFrom: $dateFrom,
+    filter: {market: {equalTo: $market}},
+  ) {
+    nodes { date open close min max volumeBase }
+  }
+}
