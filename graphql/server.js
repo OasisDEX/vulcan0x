@@ -39,8 +39,8 @@ const limiter = new RateLimit({
 
 const readEntities = (dir, ext) => {
   return _.fromPairs(fs.readdirSync(dir)
-    .map(file => file.endsWith(ext) && file.substr(0, file.length - ext.length))
-    .filter(file => file)
+    .filter(file => file.endsWith(ext))
+    .map(file => file.substr(0, file.length - ext.length))
     .map(file => [file, fs.readFileSync(`${dir}/${file}${ext}`, 'utf-8')]));
 }
 
@@ -56,8 +56,9 @@ app.use(graphqlConfig.graphqlRoute, (req, resp, next) => {
   }
   const devModeRequest = (req.body.variables || {}).devMode;
 
-  if (devModeRequest && devModeRequest !== devMode)
+  if (devModeRequest && devModeRequest !== devMode) {
     console.log("attempt to request dev mode");
+  }
 
   if (!devMode || devModeRequest !== devMode) {
     if (allowedQueries.hasOwnProperty(req.body.operationName)) {
@@ -66,8 +67,9 @@ app.use(graphqlConfig.graphqlRoute, (req, resp, next) => {
       console.log(`query not allowed: ${req.body.operationName}`);
       req.body.query = null;
     }
-  } else
+  } else {
     console.log("dev mode requested");
+  }
 
   next();
 });
