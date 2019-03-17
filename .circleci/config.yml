@@ -24,9 +24,9 @@ jobs:
             - ~/.cache
           key: v1-dep-{{ checksum "yarn.lock" }}
 
-      - run:
-          name: Run tests
-          command: source /opt/circleci/.nvm/nvm.sh && ./test.sh
+#      - run:
+#          name: Run tests
+#          command: source /opt/circleci/.nvm/nvm.sh && ./test.sh
 
       - run: |
           # it's easier to do this here instead of separate job to avoid problems with previously built docker image not accessible
