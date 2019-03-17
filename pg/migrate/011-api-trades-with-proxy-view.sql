@@ -1,6 +1,6 @@
 CREATE VIEW api.oasis_trades_with_proxy AS
 SELECT
-  distinct(ot.idx),
+  distinct on(ot.idx, ot.tx)
   ot.act,
   ot.offer_id,
   ot.maker,
@@ -19,7 +19,8 @@ FROM
 LEFT JOIN
   proxy.proxy_info as pi
 ON
-  ot.tx = pi.tx;
+  ot.tx = pi.tx
+ORDER BY ot.idx, ot.tx;
 
 COMMENT ON COLUMN api.oasis_trades_with_proxy.offer_id is 'Offer identifier';
 COMMENT ON COLUMN api.oasis_trades_with_proxy.tx is 'Transaction ID';
