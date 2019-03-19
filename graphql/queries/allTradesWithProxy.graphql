@@ -1,12 +1,14 @@
-query allTradesWithProxy($address: String) {
+query allTradesWithProxy($addresses: [String!]) {
   allOasisTradesWithProxies(
     filter: {
-      or: [{and: [{lotTkn: {equalTo: $baseToken}}, {bidTkn: {equalTo: $quoteToken}}]}, {and: [{lotTkn: {equalTo: $quoteToken}}, {bidTkn: {equalTo: $baseToken}}]}],
-      time: {greaterThan: $timeFrom, lessThan: $timeTo},
-    },
-    orderBy: [TIME_DESC, IDX_DESC],
-    first: $limit,
-  ) {
-    nodes { offerId maker bidAmt bidTkn lotAmt block time tx idx }
-  }
+      or: [
+        {maker: {in: $addresses}},
+        {taker: {in: $addresses}},
+        {cetFromAddress: {in: $addresses}},
+        {proxyFromAddress: {in: $addresses}}
+      ]
+    }
+    ) {
+      nodes { offerId act maker taker bidAmt bidTkn lotAmt lotTkn time tx proxyAddress proxyName }
+    }
 }
