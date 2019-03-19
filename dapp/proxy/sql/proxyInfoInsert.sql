@@ -1,13 +1,13 @@
 INSERT INTO proxy.proxy_info (
-  address,
+  proxy_address,
   tag,
-  tx,
   from_address
 
 )
 VALUES (
   ${address},
   ${tag},
-  ${tx},
   ${from}
-);
+)
+
+ON CONFLICT DO NOTHING;
