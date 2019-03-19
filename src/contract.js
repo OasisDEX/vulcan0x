@@ -28,6 +28,8 @@ export const fire = (event, log, contract) => {
     .then(meta => {
       try {
         return event.transform(log, contract).then(log => {
+          if( log === false) return false;
+
           return Object.assign(log, meta);
         });
       } catch (e) {
@@ -35,7 +37,9 @@ export const fire = (event, log, contract) => {
       }
     })
     .then(data => {
-      return runMutations(event, data);
+      if(data) {
+        return runMutations(event, data);
+      }
     })
     .catch(e => console.log(e));
 };

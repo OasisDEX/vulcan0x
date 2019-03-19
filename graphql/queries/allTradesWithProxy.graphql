@@ -1,0 +1,14 @@
+query allTradesWithProxy($addresses: [String!]) {
+  allOasisTradesWithProxies(
+    filter: {
+      or: [
+        {maker: {in: $addresses}},
+        {taker: {in: $addresses}},
+        {cetFromAddress: {in: $addresses}},
+        {proxyFromAddress: {in: $addresses}}
+      ]
+    }
+    ) {
+      nodes { offerId act maker taker bidAmt bidTkn lotAmt lotTkn time tx proxyAddress proxyName tag }
+    }
+}
