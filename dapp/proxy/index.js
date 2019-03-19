@@ -10,11 +10,13 @@ const proxy = {
     const transaction = await web3.eth.getTransaction(log.transactionHash);
     const tx_to = transaction.to.toLowerCase();
     let proxy_name = '';
+    let tx_from = '';
     if(transaction.from !== log.returnValues.maker && transaction.from !== log.returnValues.taker) {
       const code = await web3.eth.getCode(transaction.to);
 
       if(code === ds_proxy_bytecode.bytecode) {
         proxy_name = ds_proxy_bytecode.name;
+        tx_from = transaction.from;
       } else {
         if( tx_to in proxies.proxyContracts) {
           proxy_name = proxies.proxyContracts[tx_to];
@@ -24,8 +26,7 @@ const proxy = {
       return {
         address: transaction.to,
         tag: proxy_name,
-        tx: log.transactionHash,
-        from: transaction.from
+        from: tx_from
       }
     } else return false
   },
