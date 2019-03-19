@@ -9,6 +9,6 @@ query allTradesWithProxy($addresses: [String!]) {
       ]
     }
     ) {
-      nodes { offerId act maker taker bidAmt bidTkn lotAmt lotTkn time tx proxyAddress proxyName }
+      nodes { offerId act maker taker bidAmt bidTkn lotAmt lotTkn time tx proxyAddress proxyName tag }
     }
 }
