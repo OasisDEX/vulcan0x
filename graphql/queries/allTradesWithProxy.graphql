@@ -7,7 +7,8 @@ query allTradesWithProxy($addresses: [String!]) {
         {cetFromAddress: {in: $addresses}},
         {proxyFromAddress: {in: $addresses}}
       ]
-    }
+    },
+    orderBy: [TIME_DESC]
     ) {
       nodes { offerId act maker taker bidAmt bidTkn lotAmt lotTkn time tx proxyAddress proxyName tag }
     }
