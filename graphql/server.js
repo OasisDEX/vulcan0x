@@ -8,10 +8,12 @@ const compression = require("compression");
 const bodyParser = require("body-parser");
 const fs = require('fs');
 const _ = require('lodash');
+const helmet = require('helmet');
 
 const app = express();
 app.use(compression());
 app.use(bodyParser.json());
+app.use(helmet());
 
 // Rendering options for the index page
 app.engine("html", require("ejs").renderFile);
