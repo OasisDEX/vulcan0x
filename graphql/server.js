@@ -7,6 +7,7 @@ const RateLimit = require("express-rate-limit");
 const compression = require("compression");
 const bodyParser = require("body-parser");
 const fs = require('fs');
+const crypto = require('crypto');
 const _ = require('lodash');
 
 const app = express();
@@ -61,10 +62,13 @@ app.use(graphqlConfig.graphqlRoute, (req, resp, next) => {
   }
 
   if (!devMode || devModeRequest !== devMode) {
-    if (allowedQueries.hasOwnProperty(req.body.operationName)) {
-      req.body.query = allowedQueries[req.body.operationName];
+    const queryName = req.body.operationName ||
+      crypto.createHash('md5').update(req.body.query).digest('hex');
+
+    if (allowedQueries.hasOwnProperty(queryName)) {
+      req.body.query = allowedQueries[queryName];
     } else {
-      console.log(`query not allowed: ${req.body.operationName}`);
+      console.log(`query not allowed: ${queryName}`);
       req.body.query = null;
     }
   } else {
