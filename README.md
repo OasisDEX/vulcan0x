@@ -83,3 +83,4 @@ Where NETWORK is one of `mainnet`, `kovan` or `local`
 ```
 Then you should start `localnode` and you can run any script directly with yarn run subscribe | sync | graphql.
 
+test
